@@ -39,19 +39,35 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # new
     # 3rd party
     'rest_framework',
     'corsheaders',
+    'rest_framework.authtoken',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
     # Local
     "accounts.apps.AccountsConfig",
     "posts.apps.PostsConfig",
 ]
 
-REST_FRAMEWORK = {  # new
+REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.TokenAuthentication",  # new
+    ],
 }
+
+REST_AUTH = {
+    'SESSION_LOGIN': False
+}
+
 
 
 MIDDLEWARE = [
@@ -62,6 +78,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -89,10 +106,17 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',  # needed for django-allauth
             ],
         },
     },
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # output the emails to the console
+
+# specifies the database ID of the Site object
+# which is a way to host multiple websites from the same Django project
+SITE_ID = 1
 
 WSGI_APPLICATION = 'django_project.wsgi.application'
 
