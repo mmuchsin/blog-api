@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # 3rd party
     'rest_framework',
-    'corsheader',
+    'corsheaders',
     # Local
     "accounts.apps.AccountsConfig",
     "posts.apps.PostsConfig",
@@ -49,7 +49,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {  # new
     "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.AllowAny",
+        "rest_framework.permissions.IsAuthenticated",
     ],
 }
 
