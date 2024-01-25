@@ -1,6 +1,5 @@
 from rest_framework import viewsets, permissions
 from django.contrib.auth import get_user_model
-from drf_spectacular.views import SpectacularAPIView
 
 from .serializers import PostSerializer, UserSerializer
 from .models import Post
